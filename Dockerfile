@@ -4,9 +4,13 @@ WORKDIR /home/api
 
 COPY package.json ./
 
+COPY prod.config.js ./
+
 RUN npm install @nestjs/cli
 
 COPY . .
+
+RUN npm install --force
 
 RUN npm run build
 

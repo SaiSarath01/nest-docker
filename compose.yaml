@@ -1,20 +1,32 @@
-version: '3'
+version: '3.8'
+
 services:
-  api:
-    build: .
-    ports:
-      - '3000:3000'
-    environment:
-      - NODE_ENV=development
-    network_mode: host
-    depends_on:
-      - db
-  db:
-    image: mysql:latest
+  mysqldb:
+    image: mysql
     restart: always
+    env_file: ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'test'
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
     ports:
-      - '3307:3306'
-    network_mode: host
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    volumes:
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+
+  app:
+    build: .
+    image: node-mysql-app
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    volumes:
+      - ./app:/app
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
+
+volumes:
+  db-config:
+  db-data:

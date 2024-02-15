@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 export default () => ({
   port: 3000,
-  host: 'localhost',
+  host: process.env.MYSQL_HOST,
   db: 'mysql',
   database: {
     host: 'test',
-    port: 3307,
+    port: 3306,
     username: 'root',
     password: 'root',
   },

@@ -11,7 +11,7 @@ import config from './configuration/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      // isGlobal: true,
+      isGlobal: true,
       load: [config],
     }),
     DatabaseModule,
