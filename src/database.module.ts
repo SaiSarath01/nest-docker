@@ -14,7 +14,7 @@ const sequelizeConfig: SequelizeModuleOptions = {
   password: config().database.password,
   database: 'test',
   autoLoadModels: true, // Automatically discover and load models from the models directory
-  synchronize: false, // Automatically synchronize database schema with models (not recommended for production)
+  synchronize: true, // Automatically synchronize database schema with models (not recommended for production)
 };
 
 @Module({
